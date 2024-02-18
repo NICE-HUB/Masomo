@@ -24,7 +24,7 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" placeholder="Enter your password">
                 </div>
-                <button class="login_btn"><a href="../GUEST/guest.php" class="signup">Log in</a></button>
+                <button class="login_btn"><a href="../GUEST/index.html" class="signup">Log in</a></button>
                 <span class="or">Or</span>
                 <button class="linkedin_btn">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff" stroke-width="0.00024000000000000003">
