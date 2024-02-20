@@ -21,8 +21,7 @@
   <!-- 
     - custom css link
   -->
-  <link rel="stylesheet" href="./assets/css/style.css">
-
+  <link rel="stylesheet" href="guest.css">
   <!-- 
     - google font link
   -->
@@ -100,17 +99,7 @@
           <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
         </button>
 
-        <button class="header-action-btn" aria-label="cart" title="Cart">
-          <ion-icon name="cart-outline" aria-hidden="true"></ion-icon>
-
-          <span class="btn-badge">0</span>
-        </button>
-
-        <a href="#" class="btn has-before">
-          <span class="span">Try for free</span>
-
-          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-        </a>
+       
 
         <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
           <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
@@ -147,8 +136,8 @@
             <p class="hero-text">
               Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit.
             </p>
-
-            <a href="#" class="btn has-before">
+          
+            <a href="http://localhost/Masomo/COURSES/courses.php" class="btn has-before">
               <span class="span">Find courses</span>
 
               <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -1008,7 +997,7 @@
   <!-- 
     - custom js link
   -->
-  <script src="./assets/js/script.js" defer></script>
+  <script src="../guest.js"></script>
 
   <!-- 
     - ionicon link
