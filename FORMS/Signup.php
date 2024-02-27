@@ -1,3 +1,50 @@
+<?php
+
+$host = "localhost";
+$user = "root";
+$password = "";
+$db = "masomoproject";
+
+$data = mysqli_connect($host, $user, $password, $db);
+
+//if($data === false){
+  //  die("connection error");
+//} check to see the connceton
+
+    if(isset($_POST['sign_up'])){
+        $username = $_POST['name'];
+        $user_email = $_POST['email'];
+        $user_password = $_POST['password'];
+        $usertype = "student"; //this means any form upload the usertype will be "student"
+
+        //To check if the username being added already exists in the database
+        $check="SELECT * FROM user WHERE username ='$username'";
+        $check_user = mysqli_query($data,$check); //$data comes from the info being added to the database (checks)
+        
+        $row_count = mysqli_num_rows($check_user);//counting if there is multiple user(checking)same username 
+        if($row_count ==1){//this means if there is on equal data exists
+            echo "<script type = 'text/javascript'>
+            alert('Username Already Exists.Try Another One');
+            </script>";
+        }else{
+
+
+        $sql = "INSERT INTO user(username, email, password, usertype)
+        VALUES ('$username', '$user_email', '$user_password',  '$usertype')"; //every variable should be written sequentially  from the user(which is the table name)
+
+        $result = mysqli_query($data,$sql);
+
+        if($result){
+            echo "<script>alert('Data Upload Success');";
+            echo "window.location.href = 'login.php';</script>";
+        }else{
+            echo "upload failed";
+        }
+    }
+    }
+
+?>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -16,20 +63,20 @@
         </div>
         <div class="section_main">
             <h2>Sign Up</h2>
-            <form action="javascript:void(0)" novalidate autocomplete="off">
+            <form action="#" method="POST">
                 <div class="form_control">
                     <label for="">Username</label>
-                    <input type="text" id="#" placeholder="Enter your Username">
+                    <input type="text" id="#" name="name" placeholder="Enter your Username" required>
                 </div>
                 <div class="form_control">
                     <label for="email">Email</label>
-                    <input type="email" id="email" placeholder="Enter your email address">
+                    <input type="email" id="email" name="email" placeholder="Enter your email address" pattern="[a-zA-Z0-9._%+-]+@gmail\.com$" required>
                 </div>
                 <div class="form_control">
                     <label for="password">Password</label>
-                    <input type="password" id="password" placeholder="Enter your password">
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
                 </div>
-                <button class="login_btn"><a href="login.php" class="signup">Sign up</a></button>
+                <button class="login_btn" type="submit" name="sign_up">Sign up</button>
                 <span class="or">Or</span>
                 <button class="linkedin_btn">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#fff" stroke-width="0.00024000000000000003">
