@@ -28,14 +28,14 @@ if($_SERVER["REQUEST_METHOD"]== "POST"){
         $_SESSION['username'] = $name;
 
         $_SESSION['usertype'] = "student";
-        header("location:../GUEST/user.php");
+        header("location:../user.php");
     }
 
     elseif($row["usertype"] == "admin")
     {
         $_SESSION['username'] = $name;
         $_SESSION['usertype'] = "admin";
-        header("location:../GUEST/user.php"); 
+        header("location:../admin_home.php"); 
     }
     else{
         //if this when the info doesnt match

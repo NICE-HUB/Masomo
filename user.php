@@ -1,3 +1,24 @@
+<?php
+
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+session_start();
+ 
+ $host = "localhost";
+ $user = "root";
+ $password = "";
+ $db = "masomoproject";
+
+ $data = mysqli_connect($host, $user, $password, $db);
+
+ $sql = "SELECT * FROM article";
+ $result = mysqli_query ($data,$sql);
+ 
+ $sql = "SELECT * FROM course";
+ $result2 = mysqli_query ($data,$sql);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -88,7 +109,6 @@
           <li class="navbar-item">
             <a href="#" class="navbar-link" data-nav-link>Contact</a>
           </li>
-
         </ul>
 
       </nav>
@@ -98,8 +118,17 @@
         <button class="header-action-btn" aria-label="toggle search" title="Search">
           <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
         </button>
+        <?php 
+          if (isset($_SESSION['username'])) {
+            $username = $_SESSION['username'];
+            echo "<a href='#' class='navbar-link' data-nav-link>Hello $username </a>";
+          }
+          ?>
+          <a href="logout.php" class="btn has-before">
+          <span class="span">Log Out</span>
 
-       
+          <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
+        </a>
 
         <button class="header-action-btn" aria-label="open menu" data-nav-toggler>
           <ion-icon name="menu-outline" aria-hidden="true"></ion-icon>
@@ -137,7 +166,7 @@
               Excepteur sint occaecat cupidatat non proident sunt in culpa qui officia deserunt mollit.
             </p>
           
-            <a href="http://localhost/Masomo/COURSES/courses.php" class="btn has-before">
+            <a href="#" class="btn has-before">
               <span class="span">Find courses</span>
 
               <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
@@ -365,27 +394,31 @@
           <h2 class="h2 section-title">Pick A Course To Get Started</h2>
 
           <ul class="grid-list">
+            <?php
+            while($info = $result2 -> fetch_assoc())
+            {
+            ?>
 
             <li>
               <div class="course-card">
 
                 <figure class="card-banner img-holder" style="--width: 370; --height: 220;">
-                  <img src="./assets/images/course-1.jpg" width="370" height="220" loading="lazy"
+                  <img src="<?php echo "{$info['image']}" ?>" width="370" height="220" loading="lazy"
                     alt="Build Responsive Real- World Websites with HTML and CSS" class="img-cover">
                 </figure>
 
                 <div class="abs-badge">
                   <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
 
-                  <span class="span">3 Weeks</span>
+                  <span class="span"><?php echo "{$info['weeks']}" ?></span>
                 </div>
 
                 <div class="card-content">
 
-                  <span class="badge">Beginner</span>
+                  <span class="badge"><?php echo "{$info['level']}" ?></span>
 
                   <h3 class="h3">
-                    <a href="#" class="card-title">Build Responsive Real- World Websites with HTML and CSS</a>
+                    <a href="#" class="card-title"><?php echo "{$info['description']}" ?></a>
                   </h3>
 
                   <div class="wrapper">
@@ -402,7 +435,7 @@
 
                   </div>
 
-                  <data class="price" value="29">$29.00</data>
+                  <data class="price" value="29"><?php echo "{$info['cost']}" ?></data>
 
                   <ul class="card-meta-list">
 
@@ -424,125 +457,9 @@
 
               </div>
             </li>
-
-            <li>
-              <div class="course-card">
-
-                <figure class="card-banner img-holder" style="--width: 370; --height: 220;">
-                  <img src="./assets/images/course-2.jpg" width="370" height="220" loading="lazy"
-                    alt="Java Programming Masterclass for Software Developers" class="img-cover">
-                </figure>
-
-                <div class="abs-badge">
-                  <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-
-                  <span class="span">8 Weeks</span>
-                </div>
-
-                <div class="card-content">
-
-                  <span class="badge">Advanced</span>
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Java Programming Masterclass for Software Developers</a>
-                  </h3>
-
-                  <div class="wrapper">
-
-                    <div class="rating-wrapper">
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">(4.5 /9 Rating)</p>
-
-                  </div>
-
-                  <data class="price" value="49">$49.00</data>
-
-                  <ul class="card-meta-list">
-
-                    <li class="card-meta-item">
-                      <ion-icon name="library-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">15 Lessons</span>
-                    </li>
-
-                    <li class="card-meta-item">
-                      <ion-icon name="people-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">35 Students</span>
-                    </li>
-
-                  </ul>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="course-card">
-
-                <figure class="card-banner img-holder" style="--width: 370; --height: 220;">
-                  <img src="./assets/images/course-3.jpg" width="370" height="220" loading="lazy"
-                    alt="The Complete Camtasia Course for Content Creators" class="img-cover">
-                </figure>
-
-                <div class="abs-badge">
-                  <ion-icon name="time-outline" aria-hidden="true"></ion-icon>
-
-                  <span class="span">3 Weeks</span>
-                </div>
-
-                <div class="card-content">
-
-                  <span class="badge">Intermediate</span>
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">The Complete Camtasia Course for Content Creators</a>
-                  </h3>
-
-                  <div class="wrapper">
-
-                    <div class="rating-wrapper">
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                      <ion-icon name="star"></ion-icon>
-                    </div>
-
-                    <p class="rating-text">(4.9 /7 Rating)</p>
-
-                  </div>
-
-                  <data class="price" value="35">$35.00</data>
-
-                  <ul class="card-meta-list">
-
-                    <li class="card-meta-item">
-                      <ion-icon name="library-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">13 Lessons</span>
-                    </li>
-
-                    <li class="card-meta-item">
-                      <ion-icon name="people-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">18 Students</span>
-                    </li>
-
-                  </ul>
-
-                </div>
-
-              </div>
-            </li>
-
+            <?php
+            }
+            ?>
           </ul>
 
           <a href="#" class="btn has-before">
@@ -656,14 +573,16 @@
 
           <ul class="grid-list">
 
+            <?php
+            while($info = $result ->fetch_assoc()){
+              ?>
             <li>
               <div class="blog-card">
 
                 <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
-                  <img src="./assets/images/blog-1.jpg" width="370" height="370" loading="lazy"
+                  <img src="<?php echo "{$info['image']}"?>" width="370" height="370" loading="lazy"
                     alt="Become A Better Blogger: Content Planning" class="img-cover">
                 </figure>
-
                 <div class="card-content">
 
                   <a href="#" class="card-btn" aria-label="read more">
@@ -673,7 +592,7 @@
                   <a href="#" class="card-subtitle">Online</a>
 
                   <h3 class="h3">
-                    <a href="#" class="card-title">Become A Better Blogger: Content Planning</a>
+                    <a href="#" class="card-title"><?php echo "{$info['description']}"?></a>
                   </h3>
 
                   <ul class="card-meta-list">
@@ -681,7 +600,7 @@
                     <li class="card-meta-item">
                       <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
 
-                      <span class="span">Jan 10, 2024</span>
+                      <span class="span">2024 JAN 13</span>
                     </li>
 
                     <li class="card-meta-item">
@@ -700,97 +619,10 @@
 
               </div>
             </li>
-
-            <li>
-              <div class="blog-card">
-
-                <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
-                  <img src="./assets/images/blog-2.jpg" width="370" height="370" loading="lazy"
-                    alt="Become A Better Blogger: Content Planning" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-
-                  <a href="#" class="card-btn" aria-label="read more">
-                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-                  </a>
-
-                  <a href="#" class="card-subtitle">Online</a>
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Become A Better Blogger: Content Planning</a>
-                  </h3>
-
-                  <ul class="card-meta-list">
-
-                    <li class="card-meta-item">
-                      <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Jan 10, 2024</span>
-                    </li>
-
-                    <li class="card-meta-item">
-                      <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Com 09</span>
-                    </li>
-
-                  </ul>
-
-                  <p class="card-text">
-                    Lorem Ipsum Dolor Sit Amet Cons Tetur Adipisicing Sed.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
-            <li>
-              <div class="blog-card">
-
-                <figure class="card-banner img-holder has-after" style="--width: 370; --height: 370;">
-                  <img src="./assets/images/blog-3.jpg" width="370" height="370" loading="lazy"
-                    alt="Become A Better Blogger: Content Planning" class="img-cover">
-                </figure>
-
-                <div class="card-content">
-
-                  <a href="#" class="card-btn" aria-label="read more">
-                    <ion-icon name="arrow-forward-outline" aria-hidden="true"></ion-icon>
-                  </a>
-
-                  <a href="#" class="card-subtitle">Online</a>
-
-                  <h3 class="h3">
-                    <a href="#" class="card-title">Become A Better Blogger: Content Planning</a>
-                  </h3>
-
-                  <ul class="card-meta-list">
-
-                    <li class="card-meta-item">
-                      <ion-icon name="calendar-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Jan 10, 2024</span>
-                    </li>
-
-                    <li class="card-meta-item">
-                      <ion-icon name="chatbubbles-outline" aria-hidden="true"></ion-icon>
-
-                      <span class="span">Com 09</span>
-                    </li>
-
-                  </ul>
-
-                  <p class="card-text">
-                    Lorem Ipsum Dolor Sit Amet Cons Tetur Adipisicing Sed.
-                  </p>
-
-                </div>
-
-              </div>
-            </li>
-
+            <?php
+            }
+            ?>
+            
           </ul>
 
           <img src="./assets/images/blog-shape.png" width="186" height="186" loading="lazy" alt=""
